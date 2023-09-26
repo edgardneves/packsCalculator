@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Factorio - Packs per Second Calculator</title>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+		<link rel="stylesheet" href="style.css">
+	</head>
+	<body>
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="card h-100">
+						<div class="card-body">
+							<div class="row mb-2 align-items-center">
+								<div class="col-2">
+									<input type="number" id="packs-per" class="form-control" min="1" placeholder="1, 2, 3, etc" value="60">
+								</div>
+								<h5 class="card-title col-3 mb-0">pacotes por</h5>
+								<div class="col-7">
+									<select class="form-select" id="packs-per-what">
+										<option value="m">Minutos</option>
+										<option value="s">Segundos</option>
+									</select>
+								</div>
+							</div>
+							<p class="card-text">
+								Laboratórios necessários: <span id="labs-needed" class="text-primary"></span> para consumir os pacotes
+							</p>
+							<p class="card-text">
+								Pesquisa completa em: <span id="ppsstime" class="text-primary"></span> segundos (<span id="ppsmtime" class="text-primary"></span> minutos).
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-1">
+					<div class="card h-100">
+						<div class="card-body text-center">
+							<p class="card-text">&nbsp;</p>
+							<div class="row mb-2 align-items-center">
+								<h5 class="card-title col-12 mb-0"><small>ou</small></h5>
+							</div>
+							<p class="card-text">&nbsp;</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="col">
+					<div class="card h-100">
+						<div class="card-body">
+							<div class="row mb-2 align-items-center">
+								<h5 class="card-title col-6 mb-0">Número de laboratórios</h5>
+								
+								<div class="col-6">
+									<select class="d-none for-spacing">
+										<option>&nbsp;</option>
+									</select>
+									<input type="number" id="number-of-labs" class="form-control" min="1" placeholder="1, 2, 3, etc" value="4">
+								</div>
+							</div>
+
+							<p class="card-text">
+								Consumo: <span id="pps" class="text-primary"></span> pacotes por segundo
+							</p>
+							<p class="card-text">
+								Pesquisa completa em: <span id="lstime" class="text-primary"></span> segundos (<span id="lmtime" class="text-primary"></span> minutos).
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		
+			<div class="card mt-3">
+				<div class="card-body">
+					<h6 class="card-title">Configurações compartilhadas</h6>
+					<form>
+						<div class="row">
+							<div class="form-group col-sm-4 mb-3">
+								<label>Módulos de Produtividade por Laboratório</label>
+								<div>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="pmpl" value="0" id="pmpl0">
+										<label class="form-check-label" for="pmpl0">0</label>
+									</div>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="pmpl" value="1" id="pmpl1">
+										<label class="form-check-label" for="pmpl1">1</label>
+									</div>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="pmpl" value="2" id="pmpl2"
+											checked="checked">
+										<label class="form-check-label" for="pmpl2">2</label>
+									</div>
+								</div>
+							</div>
+							<div class="form-group col-sm-3 mb-3" id="pml-block">
+								<label>Nível do Módulo de Produtividade</label>
+								<div>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="pml" value="1" id="pml1">
+										<label class="form-check-label" for="pml1">&bull;</label>
+									</div>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="pml" value="2" id="pml2">
+										<label class="form-check-label" for="pml2">&bull;&bull;</label>
+									</div>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="pml" value="3" id="pml3"
+											checked="checked">
+										<label class="form-check-label" for="pml3">&bull;&bull;&bull;</label>
+									</div>
+								</div>
+							</div>
+							<div class="form-group col-sm-2 mb-3">
+								<label>Tempo de pesquisa</label>
+								<input type="number" id="research-time" class="form-control" placeholder="15, 30, 45, 60" min="0" value="60" style="width: 80px;">
+							</div>
+							<div class="form-group col-sm-3 mb-3">
+								<label>Pacotes científicos necessários (uma cor)</label>
+								<input type="number" id="number-of-packs" class="form-control" placeholder="10, 50, 100, 1000, etc" min="0" value="1000">
+							</div>
+							<div class="form-group col-sm-4 mb-3">
+								<label>Módulos de Velovidade, em Beacons, por Lab.</label>
+								<input type="number" id="speed-modules" class="form-control" placeholder="0, 16, 24, etc" value="16" min="0" max="24" style="width: 80px;">
+							</div>
+							<div class="form-group col-sm-2 mb-3" id="sml-block">
+								<label>Nível do Módulo de Velocidade</label>
+								<div>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="sml" value="1" id="sml1">
+										<label class="form-check-label" for="sml1">&bull;</label>
+									</div>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="sml" value="2" id="sml2">
+										<label class="form-check-label" for="sml2">&bull;&bull;</label>
+									</div>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="sml" value="3" id="sml3"
+											checked="checked">
+										<label class="form-check-label" for="sml3">&bull;&bull;&bull;</label>
+									</div>
+								</div>
+							</div>
+							<div class="form-group col-sm-3 mb-3">
+								<label>Velocidade de Pesquisa dos Lab.</label>
+								<select id="lab-research-speed" class="form-select">
+									<option value="0">Nenhum</option>
+									<option value="20">Lab pesquisa (velocidade 1)</option>
+									<option value="50">Lab pesquisa (velocidade 2)</option>
+									<option value="90">Lab pesquisa (velocidade 3)</option>
+									<option value="140">Lab pesquisa (velocidade 4)</option>
+									<option value="190">Lab pesquisa (velocidade 5)</option>
+									<option value="250" selected="selected">Lab pesquisa (velocidade 6)</option>
+								</select>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="card mt-3">
+				<div class="card-body">
+					<h6 class="card-title">Alterações rápidas</h6>
+		
+					<div class="row">
+						<div class="col">
+							<div>
+								<button type="button" class="btn btn-primary" id="drop-modules">Excluir módulos</button>
+								<button type="button" class="btn btn-primary" id="eight-beacon-modules">8 Beacon Layout</button>
+								<button type="button" class="btn btn-primary" id="twelve-beacon-modules">12 Beacon Layout</button>
+							</div>
+						</div>
+						<div class="col">
+							<div class="mb-3">
+								<button type="button" class="btn btn-primary" id="mid-recipe">Mid Game Recipe</button>
+								<button type="button" class="btn btn-primary" id="end-recipe">End Game Recipe</button>
+							</div>
+							<div>
+								<div class="form-group">
+									<select class="form-control col-sm-6" id="recipe-select">
+										<optgroup id="level-7" label="Infinite Research"></optgroup>
+										<optgroup id="level-6" label="High Tech Research"></optgroup>
+										<optgroup id="level-5" label="Production Research"></optgroup>
+										<optgroup id="level-3" label="Military Research"></optgroup>
+										<optgroup id="level-4" label="Pack 3 Research"></optgroup>
+										<optgroup id="level-2" label="Pack 2 Research"></optgroup>
+										<optgroup id="level-1" label="Pack 1 Research"></optgroup>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<hr>
+			<div class="col text-center">
+				A factorio calculator by <a href="https://reddit.com/u/Tickthokk" target="_blank">Tickthokk</a> | <a href="https://codepen.io/Tickthokk/full/NBbKPZ/" target="_blank">Original project</a>
+			</div>
+		</div>
+		
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+		<script src="app.js"></script>
+	</body>
+</html>
